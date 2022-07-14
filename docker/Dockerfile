@@ -1,9 +1,9 @@
-FROM coleifer/sqlite
+FROM gerardsyd/sqlite-web
 RUN apk add --no-cache --virtual .build-reqs build-base gcc make \
       && pip install --no-cache-dir cython \
       && pip install --no-cache-dir flask peewee sqlite-web \
       && apk del .build-reqs
-EXPOSE 8080
+EXPOSE $SQLITE_PORT
 VOLUME /data
 WORKDIR /data
-CMD sqlite_web -H 0.0.0.0 -x $SQLITE_DATABASE
+CMD sqlite_web -H 0.0.0.0 -x $SQLITE_DATABASE -p $SQLITE_PORT
